@@ -9,7 +9,7 @@ const app = express();
 
 app.use(cors());
 
-mongoose.connect('mongodb://localhost/albums');
+mongoose.connect('mongodb://Anton:Anton123@ds131784.mlab.com:31784/posts');
 mongoose.Promise = global.Promise;
 
 app.use(bodyParser.json());

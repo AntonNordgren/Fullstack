@@ -7,10 +7,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listOfAlbums: [],
-      artist: '',
-      album: '',
-      albumCover: ''
+      listOfPosts: [],
+      post: ''
     }
   }
 
@@ -19,94 +17,79 @@ class App extends Component {
   }
 
   getDataFromDB = () => {
-    fetch('/api/albums/', {
+    fetch('/api/posts/', {
       method: 'GET',
     })
       .then(res => res.json())
-      .then(json => this.setState({ listOfAlbums: json }))
+      .then(json => this.setState({ listOfPosts: json }))
       .catch(err => console.log(err))
   }
 
   handleAdd = () => {
-    fetch('/api/albums?artist=' + this.state.artist + 'album=' + this.state.album + 'albumCover=' + this.state.albumCover, {
+    fetch('/api/posts?post=' + this.state.post, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        artist: this.state.artist,
-        album: this.state.album,
-        albumCover: this.state.albumCover
+        post: this.state.post,
       })
     })
       .then(res => res.json())
-      .then(json => this.setState({ listOfAlbums: json }))
+      .then(json => this.setState({ listOfPosts: json }))
       .catch(err => console.log(err))
   }
 
   handleDelete = (id) => {
-    fetch('/api/albums/' + id, {
+    fetch('/api/posts/' + id, {
       method: 'DELETE',
     })
       .then(res => res.json())
-      .then(json => this.setState({listOfAlbums: json}))
+      .then(json => this.setState({listOfPosts: json}))
       .catch(err => console.log(err))
   }
 
   handleEdit = (id) => {
-    fetch('/api/albums/' + id, {
+    fetch('/api/posts/' + id, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        artist: this.state.artist,
-        album: this.state.album,
-        albumCover: this.state.albumCover
+        post: this.state.post,
       })
     })
       .then(res => res.json())
-      .then(json => this.setState({listOfAlbums: json}))
+      .then(json => this.setState({listOfPosts: json}))
       .catch(err => console.log(err))
   }
 
-  handleArtist = (e) => {
+  handlePost = (e) => {
     this.setState({
-      artist: e.target.value
-    })
-  }
-
-  handleAlbum = (e) => {
-    this.setState({
-      album: e.target.value
-    })
-  }
-
-  handleURL = (e) => {
-    this.setState({
-      albumCover: e.target.value
+      post: e.target.value
     })
   }
 
   render() {
     return (
       <div className="App">
+          <div className="instruction">
+            Write post and click add or edit.
+          </div>
         <div className="inputDiv">
-          <input onChange={this.handleArtist} type="text" placeholder="Enter artist" />
-          <input onChange={this.handleAlbum} type="text" placeholder="Enter album" />
-          <input onChange={this.handleURL} type="text" placeholder="Enter imgURL" />
+          <input onChange={this.handlePost} type="text" placeholder="Enter Post" />
           <button onClick={() => this.handleAdd()}>Add</button>
         </div>
         <div>
           {
-            this.state.listOfAlbums.map((album) => {
+            this.state.listOfPosts.map((post) => {
               return (
-                <div key={album.artist}>
-                  {album.artist}
-                  <button onClick={() => this.handleDelete(album._id)}>Delete</button>
-                  <button onClick={() => this.handleEdit(album._id)}>Edit</button>
+                <div className="postDiv" key={post.post}>
+                  {post.post}
+                  <button onClick={() => this.handleDelete(post._id)}>Delete</button>
+                  <button onClick={() => this.handleEdit(post._id)}>Edit</button>
                 </div>
               )
             })

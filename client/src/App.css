@@ -3,3 +3,18 @@ body {
   background-color: #343a3b;
   color: white;
 }
+
+.instruction {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.inputDiv {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.postDiv {
+  margin-top: 20px;
+  text-align: center;
+}

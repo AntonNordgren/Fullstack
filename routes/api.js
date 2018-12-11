@@ -1,41 +1,35 @@
 
 const express = require('express');
 const router = express.Router();
-const Album = require('../models/album');
+const Post = require('../models/post');
 
-router.get('/albums', (req, res, next) => {
-    Album.find({}).then((albums) => {
-        res.send(albums);
+router.get('/posts', (req, res, next) => {
+    Post.find({}).then((post) => {
+        res.send(post);
     });
 });
 
-router.post('/albums', (req, res, next) => {
-    Album.create(req.body).then(() => {
-        Album.find({}).then((albums) => {
-            res.send(albums);
+router.post('/posts', (req, res, next) => {
+    Post.create(req.body).then(() => {
+        Post.find({}).then((post) => {
+            res.send(post);
         });
     }).catch(next);
 });
 
 
-router.put('/albums/:id', (req, res, next) => {
-    Album.findByIdAndUpdate({ _id: req.params.id }, req.body).then(() => {
-        /*
-        Album.findOne({_id: req.params.id}).then((album) => {
-            res.send(album);
-        })
-        res.send(album);
-        */
-        Album.find({}).then((albums) => {
-            res.send(albums);
+router.put('/posts/:id', (req, res, next) => {
+    Post.findByIdAndUpdate({ _id: req.params.id }, req.body).then(() => {
+        Post.find({}).then((post) => {
+            res.send(post);
         });
     });
 });
 
-router.delete('/albums/:id', (req, res, next) => {
-    Album.findByIdAndRemove({ _id: req.params.id }).then(() => {
-        Album.find({}).then((albums) => {
-            res.send(albums);
+router.delete('/posts/:id', (req, res, next) => {
+    Post.findByIdAndRemove({ _id: req.params.id }).then(() => {
+        Post.find({}).then((post) => {
+            res.send(post);
         });
     });
 });
